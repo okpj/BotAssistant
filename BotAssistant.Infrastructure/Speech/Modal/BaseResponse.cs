@@ -2,10 +2,10 @@
 
 public class BaseResponse
 {
-    [JsonProperty("error_code")]
+    [JsonPropertyName("error_code")]
     public string? ErrorCode { get; set; }
 
 
-    [JsonProperty("error_message")]
+    [JsonPropertyName("error_message")]
     public string? ErrorMessage { get; set; }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace BotAssistant.Controllers;
+﻿namespace BotAssistant.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

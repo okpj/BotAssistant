@@ -1,4 +1,5 @@
-﻿global using BotAssistant.Infrastructure.TelegramBot.Options;
+﻿global using Microsoft.AspNetCore.Mvc;
+global using BotAssistant.Infrastructure.TelegramBot.Options;
 global using BotAssistant.Infrastructure.TelegramBot.Services;
 global using BotAssistant.Infrastructure.TelegramBot.Services.Interfaces;
 global using BotAssistant.Infrastructure.Options;
