@@ -1,2 +1,4 @@
 # BotAssistant
-Распознование голосовых сообщений в Telegram с помощью Yandex SpeechKit
+
+## Возможности:
+Распознавание голосовых сообщений в Telegram с помощью Yandex SpeechKit
