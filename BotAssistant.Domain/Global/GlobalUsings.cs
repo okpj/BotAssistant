@@ -1,0 +1,1 @@
+﻿global using BotAssistant.Domain.Base;
