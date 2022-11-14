@@ -12,19 +12,22 @@ public class HandleUpdateService : IHandleUpdateService
     }
     public async Task Handle(Update update)
     {
-        if (update.Message is null || update.Message.ForwardFrom is not null)
+        if (update.Message is null || update.Message.ViaBot is not null)
             return;
 
-        if (update.Message?.Voice is not null)
+        if (update.Message.Type == MessageType.Voice)
             await VoiceHandle(update.Message);
     }
 
     public async Task VoiceHandle(Message message)
     {
-        var text = await VoiceMessageRecognize(message!.Voice!);
-        if (string.IsNullOrEmpty(text))
-            text = "Не удалось распознать :(";
-        await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, text, replyToMessageId: message.MessageId);
+        if(message.Voice is not null)
+        {
+            var text = await VoiceMessageRecognize(message!.Voice!);
+            if (string.IsNullOrEmpty(text))
+                text = "Не удалось распознать :(";
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, text, replyToMessageId: message.MessageId);
+        }
     }
 
     public async Task<string?> VoiceMessageRecognize(Voice voice)

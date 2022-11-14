@@ -1,0 +1,11 @@
+global using Xunit;
+global using BotAssistant.Controllers;
+global using BotAssistant.Infrastructure.Options;
+global using BotAssistant.Infrastructure.TelegramBot.Services.Interfaces;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Extensions.Options;
+global using Moq;
+global using BotAssistant.Infrastructure.Speech.Modal;
+global using System.Text.Json;
+global using BotAssistant.Infrastructure.Speech;
+global using Moq.Protected;

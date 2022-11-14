@@ -2,6 +2,7 @@
 
 public class RecognizeResult : BaseResponse
 {
+    [JsonPropertyName("result")]
     public string? Result { get; set; }
 
 
@@ -9,7 +10,7 @@ public class RecognizeResult : BaseResponse
     {
         try
         {
-            var result = JsonConvert.DeserializeObject<RecognizeResult>(json);
+            var result = System.Text.Json.JsonSerializer.Deserialize<RecognizeResult>(json);
             return result;
         }
         catch (Exception ex)
