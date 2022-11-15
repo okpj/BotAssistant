@@ -7,6 +7,7 @@ public static class ServiceCollectionExtensions
         services.Configure<ApiOptions>(configuration.GetSection(ApiOptions.ConfigurationSection));
         services.Configure<TelegramBotWebHookOptions>(configuration.GetSection(TelegramBotWebHookOptions.ConfigurationSection));
         services.Configure<YandexOptions>(configuration.GetSection(YandexOptions.ConfigurationSection));
+        services.Configure<PaymentOptions>(configuration.GetSection(PaymentOptions.ConfigurationSection));
 
     }
 
@@ -15,7 +16,11 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(config[$"{TelegramBotWebHookOptions.ConfigurationSection}:Token"]));
         services.AddSingleton<ITelegramWebHook, TelegramWebHook>();
         services.AddSingleton<IYandexSpeechService, YandexSpeechService>();
-        services.AddSingleton<IHandleUpdateService, HandleUpdateService>();
+        services.AddSingleton<IHandleUpdateService, UpdateService>();
+
+        services.AddSingleton<IVoiceMessageHandler, VoiceMessageHandler>();
+        services.AddSingleton<IHelpCommandHandler, HelpCommandHandler>();
+        services.AddSingleton<IDonateCommandHandler, DonateCommandHandler>();
 
     }
 

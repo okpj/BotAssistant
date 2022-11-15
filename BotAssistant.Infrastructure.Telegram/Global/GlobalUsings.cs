@@ -9,3 +9,7 @@ global using Telegram.Bot.Types.InputFiles;
 global using File = System.IO.File;
 global using BotAssistant.Infrastructure.Speech;
 global using Telegram.Bot.Types.Enums;
+global using BotAssistant.Infrastructure.TelegramBot.Model;
+global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers.Base;
+global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers;
+global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers.CommandHandler.Interfaces;
