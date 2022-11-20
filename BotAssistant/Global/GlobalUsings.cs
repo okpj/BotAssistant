@@ -10,3 +10,7 @@ global using BotAssistant.Infrastructure.Speech;
 global using System.Net.Http.Headers;
 global using Microsoft.Extensions.Options;
 global using Telegram.Bot.Types;
+
+global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers;
+global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers.CommandHandler;
+global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers.CommandHandler.Interfaces;
