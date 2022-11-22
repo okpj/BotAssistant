@@ -20,7 +20,7 @@ public class UpdateService : IHandleUpdateService
             return;
 
         if (update.Message.Type == MessageType.Voice)
-            await _voiceMessageHandler.Handle(update.Message);
+            await _voiceMessageHandler.HandleAsync(update.Message);
 
         if (update.Message.Entities?.Any(x => x.Type == MessageEntityType.BotCommand) ?? false)
             await CommandHandle(update.Message);
@@ -32,10 +32,10 @@ public class UpdateService : IHandleUpdateService
         switch (message.Text)
         {
             case Commands.HELP:
-                await _helpCommandHandler.Handle(message);
+                await _helpCommandHandler.HandleAsync(message);
                 break;
             case Commands.DONATE:
-                await _donateCommandHandler.Handle(message);
+                await _donateCommandHandler.HandleAsync(message);
                 break;
             default:
                 break;

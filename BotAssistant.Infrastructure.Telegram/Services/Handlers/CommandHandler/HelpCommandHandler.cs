@@ -9,7 +9,7 @@ public sealed class HelpCommandHandler : IHelpCommandHandler
         _telegramBotClient = telegramBotClient;
     }
 
-    public async Task Handle(Message message)
+    public async Task HandleAsync(Message message)
     {
         await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, Description) ;
     }

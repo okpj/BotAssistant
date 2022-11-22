@@ -1,4 +1,4 @@
-﻿namespace BotAssistant.Infrastructure.Speech.Modal;
+﻿namespace BotAssistant.Infrastructure.Yandex.Model;
 
 public class RecognizeResult : BaseResponse
 {

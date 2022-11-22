@@ -2,5 +2,5 @@
 
 public interface IHandler
 {
-    Task Handle(Message message);
+    Task HandleAsync(Message message);
 }

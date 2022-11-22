@@ -1,4 +1,4 @@
-﻿namespace BotAssistant.Infrastructure.Speech;
+﻿namespace BotAssistant.Infrastructure.Yandex.Speech;
 
 public class YandexSpeechService : IYandexSpeechService
 {
@@ -10,7 +10,7 @@ public class YandexSpeechService : IYandexSpeechService
         _httpClient = httpClient;
     }
 
-    public async Task<RecognizeResult?> Recognize(byte[] voice)
+    public async Task<RecognizeResult?> RecognizeAsync(byte[] voice)
     {
         try
         {
@@ -24,7 +24,7 @@ public class YandexSpeechService : IYandexSpeechService
         }
         catch (Exception ex)
         {
-            Serilog.Log.Error(ex, nameof(Recognize));
+            Serilog.Log.Error(ex, nameof(RecognizeAsync));
             return new RecognizeResult { ErrorCode = "-1", ErrorMessage = "Ошибка при выполнении распознавания" };
         }
     }

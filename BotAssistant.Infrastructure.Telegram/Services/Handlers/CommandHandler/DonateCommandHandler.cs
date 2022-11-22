@@ -13,7 +13,7 @@ public sealed class DonateCommandHandler : IDonateCommandHandler
         _paymentOptions = paymentOptions;
     }
 
-    public async Task Handle(Message message)
+    public async Task HandleAsync(Message message)
     {
         await _telegramBotClient.SendInvoiceAsync(message.Chat.Id, "Пожертвование", "На развитие проекта",
             Guid.NewGuid().ToString(), _paymentOptions.Value.ProviderToken,
