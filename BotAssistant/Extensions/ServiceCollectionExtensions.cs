@@ -1,4 +1,6 @@
-﻿namespace BotAssistant.Extensions;
+﻿using System.Reactive.Subjects;
+
+namespace BotAssistant.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -25,6 +27,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IVoiceMessageHandler, VoiceMessageHandler>();
         services.AddSingleton<IHelpCommandHandler, HelpCommandHandler>();
         services.AddSingleton<IDonateCommandHandler, DonateCommandHandler>();
+
+        
 
     }
 
