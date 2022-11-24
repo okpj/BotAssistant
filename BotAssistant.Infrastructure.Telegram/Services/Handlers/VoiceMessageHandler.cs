@@ -9,6 +9,8 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
 
     private const string OGGExtension = ".ogg";
     private const int SmallDurationBorder = 29;
+    private const int LongDurationBorder = 300;
+
     public VoiceMessageHandler(ITelegramBotClient telegramBotClient,
         IYandexSpeechService yandexSpeechService,
         IYandexObjectService yandexObjectService,
@@ -26,8 +28,10 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
         {
             if (message.Voice.Duration <= SmallDurationBorder)
                 await HandleSmallVoiceMessageAsync(message);
-            else
+            else if(message.Voice.Duration <= LongDurationBorder)
                 _recognizeStream.OnNext(new WorkerTask { Work = () => HandleLongVoiceMessageAsync(message) });
+            else
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Слишком долго говоришь 🥱", replyToMessageId: message.MessageId);
         }
     }
 
