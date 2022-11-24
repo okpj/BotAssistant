@@ -8,7 +8,7 @@ public static class ServiceCollectionExtensions
         services.Configure<TelegramBotWebHookOptions>(configuration.GetSection(TelegramBotWebHookOptions.ConfigurationSection));
         services.Configure<YandexOptions>(configuration.GetSection(YandexOptions.ConfigurationSection));
         services.Configure<YandexAuthorizedKeyOptions>(configuration.GetSection(YandexAuthorizedKeyOptions.ConfigurationSection));
-        
+
         services.Configure<PaymentOptions>(configuration.GetSection(PaymentOptions.ConfigurationSection));
     }
 
@@ -18,18 +18,35 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ITelegramWebHook, TelegramWebHook>();
         services.AddSingleton<IHandleUpdateService, UpdateService>();
 
-        services.AddSingleton<IYandexSpeechService, YandexSpeechService>();
-        services.AddSingleton<IYandexTokenService, YandexTokenService>();
-        services.AddSingleton<IYandexObjectService, YandexObjectService>();
-
-        services.AddSingleton<IVoiceMessageHandler, VoiceMessageHandler>();
-        services.AddSingleton<IHelpCommandHandler, HelpCommandHandler>();
-        services.AddSingleton<IDonateCommandHandler, DonateCommandHandler>();
-
+        AddYandexServices(services);
+        AddBotHandleServices(services);
+        AddBackgroundServices(services);
     }
 
 
     #region private
+
+    private static void AddBotHandleServices(IServiceCollection services)
+    {
+        services.AddSingleton<IVoiceMessageHandler, VoiceMessageHandler>();
+        services.AddSingleton<IHelpCommandHandler, HelpCommandHandler>();
+        services.AddSingleton<IDonateCommandHandler, DonateCommandHandler>();
+    }
+
+    private static void AddYandexServices(IServiceCollection services)
+    {
+        services.AddSingleton<IYandexSpeechService, YandexSpeechService>();
+        services.AddSingleton<IYandexTokenService, YandexTokenService>();
+        services.AddSingleton<IYandexObjectService, YandexObjectService>();
+    }
+
+    private static void AddBackgroundServices(IServiceCollection services)
+    {
+        services.AddSingleton<ReplaySubject<WorkerTask>>();
+        services.AddSingleton<IObservable<WorkerTask>>(x => x.GetRequiredService<ReplaySubject<WorkerTask>>());
+        services.AddSingleton<IObserver<WorkerTask>>(x => x.GetRequiredService<ReplaySubject<WorkerTask>>());
+        services.AddHostedService<ObserverBackgroundWorker>();
+    }
 
     public static void ConfigureHttpClients(this IServiceCollection services, IConfiguration configuration)
     {

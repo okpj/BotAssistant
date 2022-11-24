@@ -15,3 +15,6 @@ global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers;
 global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers.CommandHandler.Interfaces;
 global using BotAssistant.Infrastructure.Yandex.Object;
 global using BotAssistant.Infrastructure.Yandex.Model;
+global using BotAssistant.Infrastructure.Worker.Model;
+global using BotAssistant.Infrastructure.Yandex.Model.Extensions;
+global using BotAssistant.Infrastructure.Yandex.Model.Speech;
