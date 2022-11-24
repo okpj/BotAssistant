@@ -65,12 +65,12 @@ public class YandexSpeechService : IYandexSpeechService
     {
         var reqUri = new Uri($"{_yandexOptions.Value.OperationURL}/{operationId}");
         Operation<LongRunningRecognizeResponse>? operation = null;
-        int requestNumber = 15;
+        int requestNumber = 40;
         try
         {
             while (requestNumber > 0)
             {
-                await Task.Delay(1000);
+                await Task.Delay(1500);
                 var response = await _httpClient.GetAsync(reqUri);
                 var resultResponse = await response.Content.ReadAsStringAsync();
                 operation = JsonHelper.FromStingJson<Operation<LongRunningRecognizeResponse>>(resultResponse);

@@ -1,25 +1,23 @@
-﻿using BotAssistant.Infrastructure.Yandex.Model.Extensions;
-using BotAssistant.Infrastructure.Yandex.Model.Speech;
-using Telegram.Bot;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace BotAssistant.Infrastructure.TelegramBot.Services.Handlers;
+﻿namespace BotAssistant.Infrastructure.TelegramBot.Services.Handlers;
 
 public sealed class VoiceMessageHandler : IVoiceMessageHandler
 {
     private readonly ITelegramBotClient _telegramBotClient;
     private readonly IYandexSpeechService _yandexSpeechService;
     private readonly IYandexObjectService _yandexObjectService;
+    private readonly IObserver<WorkerTask> _recognizeStream;
 
     private const string OGGExtension = ".ogg";
     private const int SmallDurationBorder = 29;
     public VoiceMessageHandler(ITelegramBotClient telegramBotClient,
         IYandexSpeechService yandexSpeechService,
-        IYandexObjectService yandexObjectService)
+        IYandexObjectService yandexObjectService,
+        IObserver<WorkerTask> recognizeStream)
     {
         _telegramBotClient = telegramBotClient;
         _yandexSpeechService = yandexSpeechService;
         _yandexObjectService = yandexObjectService;
+        _recognizeStream = recognizeStream;
     }
 
     public async Task HandleAsync(Message message)
@@ -29,7 +27,7 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
             if (message.Voice.Duration <= SmallDurationBorder)
                 await HandleSmallVoiceMessageAsync(message);
             else
-                await HandleLongVoiceMessageAsync(message);
+                _recognizeStream.OnNext(new WorkerTask { Work = () => HandleLongVoiceMessageAsync(message) });
         }
     }
 
@@ -61,7 +59,7 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
             var operation = await _yandexSpeechService.LongRecognizeAsync(filePath);
             if (operation?.Id is not null)
             {
-                Task.Run(async () => await GetLongRecognizeResult(message, operation.Id));
+                await GetLongRecognizeResult(message, operation.Id);
             };
         }
     }

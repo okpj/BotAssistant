@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BotAssistant.Infrastructure.Telegram\BotAssistant.Infrastructure.TelegramBot.csproj" />
+    <ProjectReference Include="..\BotAssistant.Infrastructure.Worker\BotAssistant.Infrastructure.Worker.csproj" />
   </ItemGroup>
 
   <ItemGroup>

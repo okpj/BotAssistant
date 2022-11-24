@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BotAssistant.Infrastructure.Worker\BotAssistant.Infrastructure.Worker.csproj" />
     <ProjectReference Include="..\BotAssistant.Infrastructure\BotAssistant.Infrastructure.csproj" />
   </ItemGroup>
 
