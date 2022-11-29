@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen();
 host.ConfigureHostConfiguration(hostConf =>
 {
     hostConf.AddJsonFile("hosting.json", true, true);
+    hostConf.AddJsonFile("keys/authorized_key.json");
 });
 
 webHost.UseKestrel();

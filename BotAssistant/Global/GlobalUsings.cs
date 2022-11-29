@@ -6,7 +6,17 @@ global using BotAssistant.Infrastructure.Options;
 global using Telegram.Bot;
 global using BotAssistant.Extensions;
 global using Serilog;
-global using BotAssistant.Infrastructure.Speech;
 global using System.Net.Http.Headers;
 global using Microsoft.Extensions.Options;
 global using Telegram.Bot.Types;
+
+global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers;
+global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers.CommandHandler;
+global using BotAssistant.Infrastructure.TelegramBot.Services.Handlers.CommandHandler.Interfaces;
+
+global using BotAssistant.Infrastructure.Yandex.Speech;
+global using BotAssistant.Infrastructure.Yandex.Object;
+global using BotAssistant.Infrastructure.Yandex.Token;
+global using BotAssistant.Infrastructure.Worker.Model;
+global using BotAssistant.Infrastructure.Worker;
+global using System.Reactive.Subjects;

@@ -31,7 +31,7 @@ public class YandexSpeechServiceTests
 
 
         var yandexSpeechService = new YandexSpeechService(_mockYandexOptions.Object, new HttpClient(_mockHttpMessageHandler.Object));
-        var result = await yandexSpeechService.Recognize(Array.Empty<byte>());
+        var result = await yandexSpeechService.RecognizeAsync(Array.Empty<byte>());
         Assert.Equal(result?.Result, testResultObject.Result);
 
     }

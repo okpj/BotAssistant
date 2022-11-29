@@ -20,8 +20,7 @@ public class TelegramController : ControllerBase
         if (AuthToken != _apiOptions.Value.AuthToken)
             return Unauthorized();
 
-        if (update.Message is not null)
-            await _handleUpdateService.Handle(update);
+        await _handleUpdateService.Handle(update);
 
         return Ok();
     }
