@@ -1,6 +1,4 @@
-﻿using BotAssistant.Infrastructure.Yandex.Model.Speech;
-
-namespace BotAssistant.Infrastructure.Yandex.Speech;
+﻿namespace BotAssistant.Infrastructure.Yandex.Speech;
 
 public interface IYandexSpeechService
 {
@@ -8,5 +6,5 @@ public interface IYandexSpeechService
 
     Task<BaseOperation?> LongRecognizeAsync(string filePath);
 
-    Task<Operation<LongRunningRecognizeResponse>> GetLongRecognizeResultAsync(string operationId);
+    Task<Operation<LongRunningRecognizeResponse>?> GetLongRecognizeResultAsync(string operationId);
 }

@@ -18,3 +18,4 @@ global using BotAssistant.Infrastructure.Yandex.Model;
 global using BotAssistant.Infrastructure.Worker.Model;
 global using BotAssistant.Infrastructure.Yandex.Model.Extensions;
 global using BotAssistant.Infrastructure.Yandex.Model.Speech;
+global using BotAssistant.Infrastructure.TelegramBot.Extensions;

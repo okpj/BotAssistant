@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using System.Net;
 
 namespace BotAssistant.Infrastructure.Yandex.Object;
 
@@ -28,15 +29,18 @@ public sealed class YandexObjectService : IYandexObjectService
                 BucketName = _yandexOptions.Value.BucketName,
                 Key = fileName,
             });
-            
-            return result.HttpStatusCode == System.Net.HttpStatusCode.OK;
+            if (result.HttpStatusCode == HttpStatusCode.OK)
+                return true;
+            else
+            {
+                Serilog.Log.Information("{@ResponseMetadata}, {HttpStatusCode}", result.ResponseMetadata, result.HttpStatusCode);
+                return false;
+            }
         }
         catch (Exception ex)
         {
             Serilog.Log.Error(ex, nameof(Put));
             return false;
         }
-
-
     }
 }
