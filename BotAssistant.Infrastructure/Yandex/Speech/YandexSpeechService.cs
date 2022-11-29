@@ -1,6 +1,4 @@
-﻿using BotAssistant.Infrastructure.Yandex.Model.Speech;
-
-namespace BotAssistant.Infrastructure.Yandex.Speech;
+﻿namespace BotAssistant.Infrastructure.Yandex.Speech;
 
 public class YandexSpeechService : IYandexSpeechService
 {
@@ -21,12 +19,16 @@ public class YandexSpeechService : IYandexSpeechService
                 var reqUri = new Uri(_yandexOptions.Value.RecognizeURL);
                 var response = await _httpClient.PostAsync(reqUri, content);
                 var resultResponse = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode is false)
+                    LogResponse(nameof(LongRecognizeAsync), resultResponse);
+
                 return JsonHelper.FromStingJson<RecognizeResult>(resultResponse);
             }
         }
         catch (Exception ex)
         {
-            Serilog.Log.Error(ex, nameof(RecognizeAsync));
+            Log.Error(ex, nameof(RecognizeAsync));
             return new RecognizeResult { ErrorCode = "-1", ErrorMessage = "Ошибка при выполнении распознавания" };
         }
     }
@@ -39,7 +41,7 @@ public class YandexSpeechService : IYandexSpeechService
             {
                 Config = new()
                 {
-                    Specification = new()
+                    Specification = new() { LiteratureText = true, RawResults = true }
                 },
                 Audio = new()
                 {
@@ -50,39 +52,53 @@ public class YandexSpeechService : IYandexSpeechService
             var reqUri = new Uri(_yandexOptions.Value.LongRecognizeURL);
             var response = await _httpClient.PostAsync(reqUri, new StringContent(jsonContent));
             var resultResponse = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode is false)
+                LogResponse(nameof(LongRecognizeAsync), resultResponse);
+
             var resultLongRecognize = JsonHelper.FromStingJson<BaseOperation>(resultResponse);
             return resultLongRecognize;
 
         }
         catch (Exception ex)
         {
-            Serilog.Log.Error(ex, nameof(LongRecognizeAsync));
+            Log.Error(ex, nameof(LongRecognizeAsync));
             return new BaseOperation { ErrorCode = "-1", ErrorMessage = "Ошибка при выполнении запроса длительного распознавания" };
         }
     }
 
-    public async Task<Operation<LongRunningRecognizeResponse>> GetLongRecognizeResultAsync(string operationId)
+    public async Task<Operation<LongRunningRecognizeResponse>?> GetLongRecognizeResultAsync(string operationId)
     {
         var reqUri = new Uri($"{_yandexOptions.Value.OperationURL}/{operationId}");
         Operation<LongRunningRecognizeResponse>? operation = null;
         int requestNumber = 40;
         try
         {
+            HttpResponseMessage? response = null;
+            string? resultResponse = null;
             while (requestNumber > 0)
             {
                 await Task.Delay(1500);
-                var response = await _httpClient.GetAsync(reqUri);
-                var resultResponse = await response.Content.ReadAsStringAsync();
+                response = await _httpClient.GetAsync(reqUri);
+                resultResponse = await response.Content.ReadAsStringAsync();
                 operation = JsonHelper.FromStingJson<Operation<LongRunningRecognizeResponse>>(resultResponse);
                 if (operation?.Done ?? false || response.IsSuccessStatusCode is false)
                     break;
             }
+
+            if (response?.IsSuccessStatusCode is false)
+                LogResponse(nameof(LongRecognizeAsync), resultResponse);
             return operation;
         }
         catch (Exception ex)
         {
-            Serilog.Log.Error(ex, nameof(GetLongRecognizeResultAsync));
+            Log.Error(ex, nameof(GetLongRecognizeResultAsync));
             return new Operation<LongRunningRecognizeResponse> { ErrorCode = "-1", ErrorMessage = "Ошибка при выполнении запроса длительного распознавания" };
         }
+    }
+
+    private void LogResponse(string methodName, string? resultResponse)
+    {
+        Log.Information("Error in {name}: {@resultResponse}", methodName, resultResponse);
     }
 }
