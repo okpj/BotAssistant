@@ -1,5 +1,8 @@
 ﻿namespace BotAssistant.Infrastructure.Options;
 
+/// <summary>
+/// Конфигурации API
+/// </summary>
 public class ApiOptions
 {
     public const string ConfigurationSection = "Api";

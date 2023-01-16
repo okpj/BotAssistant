@@ -1,6 +1,7 @@
 ﻿namespace BotAssistant.Infrastructure.TelegramBot.Services.Handlers
 {
-    public interface IVoiceMessageHandler : IHandler
-    {
-    }
+    /// <summary>
+    /// Обработчик аудио-сообщений
+    /// </summary>
+    public interface IVoiceMessageHandler : IHandler { }
 }

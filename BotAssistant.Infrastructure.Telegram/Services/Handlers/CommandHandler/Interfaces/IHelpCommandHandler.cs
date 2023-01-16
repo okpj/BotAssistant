@@ -1,6 +1,6 @@
 ﻿namespace BotAssistant.Infrastructure.TelegramBot.Services.Handlers.CommandHandler.Interfaces;
 
-public interface IHelpCommandHandler : IHandler
-{
-
-}
+/// <summary>
+/// Обработчик команды Help
+/// </summary>
+public interface IHelpCommandHandler : IHandler { }

@@ -3,6 +3,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace BotAssistant.Infrastructure.Worker;
 
+/// <summary>
+/// Фоновый обработчик (Наблюдатель задач)
+/// </summary>
 public class ObserverBackgroundWorker : BackgroundService
 {
     private readonly IObservable<WorkerTask> _recognizeStream;

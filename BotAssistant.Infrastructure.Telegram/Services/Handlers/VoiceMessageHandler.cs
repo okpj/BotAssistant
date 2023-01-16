@@ -1,4 +1,6 @@
-﻿namespace BotAssistant.Infrastructure.TelegramBot.Services.Handlers;
+﻿using BotAssistant.Infrastructure.TelegramBot.Model.Constants;
+
+namespace BotAssistant.Infrastructure.TelegramBot.Services.Handlers;
 
 public sealed class VoiceMessageHandler : IVoiceMessageHandler
 {
@@ -7,11 +9,6 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
     private readonly IYandexObjectService _yandexObjectService;
     private readonly IObserver<WorkerTask> _recognizeStream;
 
-    private const string _longVoiceError = "Слишком долго говоришь 🥱";
-    private const string _recognizeError = "Не удалось распознать 😔";
-
-    private const int SmallDurationBorder = 29;
-    private const int LongDurationBorder = 300;
 
     public VoiceMessageHandler(ITelegramBotClient telegramBotClient,
         IYandexSpeechService yandexSpeechService,
@@ -28,12 +25,12 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
     {
         if (message.Voice is not null)
         {
-            if (message.Voice.Duration <= SmallDurationBorder)
+            if (message.Voice.Duration <= DurationConstants.SmallDurationBorder)
                 await HandleSmallVoiceMessageAsync(message);
-            else if (message.Voice.Duration <= LongDurationBorder)
+            else if (message.Voice.Duration <= DurationConstants.LongDurationBorder)
                 _recognizeStream.OnNext(new WorkerTask { Work = () => HandleLongVoiceMessageAsync(message) });
             else
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, _longVoiceError, replyToMessageId: message.MessageId);
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, MessageConstants.LongVoiceError, replyToMessageId: message.MessageId);
         }
     }
 
@@ -41,7 +38,7 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
     {
         var text = await VoiceMessageRecognizeAsync(message!.Voice!);
         if (string.IsNullOrEmpty(text))
-            text = _recognizeError;
+            text = MessageConstants.RecognizeError;
         await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, text, replyToMessageId: message.MessageId);
     }
 
@@ -62,19 +59,21 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
         var filePutResult = await _yandexObjectService.Put(fileStream, filePath);
         if (filePutResult)
         {
-            var operation = await _yandexSpeechService.LongRecognizeAsync(filePath);
+            var operation = await _yandexSpeechService.StartLongRecognizeTaskAsync(filePath);
             if (operation?.Id is not null)
-                await GetLongRecognizeResult(message, operation.Id);
+                await LongVoiceMessageRecognizeAsync(message, operation.Id);
         }
     }
 
-    private async Task GetLongRecognizeResult(Message message, string operationId)
+    private async Task LongVoiceMessageRecognizeAsync(Message message, string operationId)
     {
         var result = await _yandexSpeechService.GetLongRecognizeResultAsync(operationId);
-        string text = string.Empty;
-        if (result?.Response is not null && result.Done) 
-            text = result.Response!.GetFullText().ToString();
-        await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, text, replyToMessageId: message.MessageId);
+        if (result?.Response is not null && result.Done)
+        {
+            var text = result.Response!.GetFullText().ToString();
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, text, replyToMessageId: message.MessageId);
+        }
+
     }
 
 }

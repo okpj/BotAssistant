@@ -33,13 +33,13 @@ public sealed class YandexObjectService : IYandexObjectService
                 return true;
             else
             {
-                Serilog.Log.Information("{@ResponseMetadata}, {HttpStatusCode}", result.ResponseMetadata, result.HttpStatusCode);
+                Log.Information("{@ResponseMetadata}, {HttpStatusCode}", result.ResponseMetadata, result.HttpStatusCode);
                 return false;
             }
         }
         catch (Exception ex)
         {
-            Serilog.Log.Error(ex, nameof(Put));
+            Log.Error(ex, nameof(Put));
             return false;
         }
     }
