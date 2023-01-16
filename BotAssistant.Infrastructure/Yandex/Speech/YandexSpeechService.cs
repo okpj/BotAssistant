@@ -1,9 +1,13 @@
-﻿namespace BotAssistant.Infrastructure.Yandex.Speech;
+﻿using BotAssistant.Infrastructure.Yandex.Model.Constants;
+
+namespace BotAssistant.Infrastructure.Yandex.Speech;
 
 public class YandexSpeechService : IYandexSpeechService
 {
     private readonly IOptions<YandexOptions> _yandexOptions;
     private readonly HttpClient _httpClient;
+    private const int RequestNumberForLongRecognize = 40;
+
     public YandexSpeechService(IOptions<YandexOptions> yandexOptions, HttpClient httpClient)
     {
         _yandexOptions = yandexOptions;
@@ -21,7 +25,7 @@ public class YandexSpeechService : IYandexSpeechService
                 var resultResponse = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode is false)
-                    LogResponse(nameof(LongRecognizeAsync), resultResponse);
+                    LogResponse(nameof(StartLongRecognizeTaskAsync), resultResponse);
 
                 return JsonHelper.FromStingJson<RecognizeResult>(resultResponse);
             }
@@ -29,11 +33,15 @@ public class YandexSpeechService : IYandexSpeechService
         catch (Exception ex)
         {
             Log.Error(ex, nameof(RecognizeAsync));
-            return new RecognizeResult { ErrorCode = "-1", ErrorMessage = "Ошибка при выполнении распознавания" };
+            return new RecognizeResult
+            {
+                ErrorCode = RecognizeErrors.RecognizeError.ErrorCode,
+                ErrorMessage = RecognizeErrors.RecognizeError.ErrorMessage
+            };
         }
     }
 
-    public async Task<BaseOperation?> LongRecognizeAsync(string filePath)
+    public async Task<BaseOperation?> StartLongRecognizeTaskAsync(string filePath)
     {
         try
         {
@@ -54,7 +62,7 @@ public class YandexSpeechService : IYandexSpeechService
             var resultResponse = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode is false)
-                LogResponse(nameof(LongRecognizeAsync), resultResponse);
+                LogResponse(nameof(StartLongRecognizeTaskAsync), resultResponse);
 
             var resultLongRecognize = JsonHelper.FromStingJson<BaseOperation>(resultResponse);
             return resultLongRecognize;
@@ -62,8 +70,12 @@ public class YandexSpeechService : IYandexSpeechService
         }
         catch (Exception ex)
         {
-            Log.Error(ex, nameof(LongRecognizeAsync));
-            return new BaseOperation { ErrorCode = "-1", ErrorMessage = "Ошибка при выполнении запроса длительного распознавания" };
+            Log.Error(ex, nameof(StartLongRecognizeTaskAsync));
+            return new BaseOperation
+            {
+                ErrorCode = RecognizeErrors.LongRecognizeError.ErrorCode,
+                ErrorMessage = RecognizeErrors.LongRecognizeError.ErrorMessage
+            };
         }
     }
 
@@ -71,13 +83,15 @@ public class YandexSpeechService : IYandexSpeechService
     {
         var reqUri = new Uri($"{_yandexOptions.Value.OperationURL}/{operationId}");
         Operation<LongRunningRecognizeResponse>? operation = null;
-        int requestNumber = 40;
+
         try
         {
             HttpResponseMessage? response = null;
             string? resultResponse = null;
-            while (requestNumber > 0)
+            var countRequests = 0;
+            while (RequestNumberForLongRecognize > countRequests)
             {
+                countRequests++;
                 await Task.Delay(1500);
                 response = await _httpClient.GetAsync(reqUri);
                 resultResponse = await response.Content.ReadAsStringAsync();
@@ -87,17 +101,21 @@ public class YandexSpeechService : IYandexSpeechService
             }
 
             if (response?.IsSuccessStatusCode is false)
-                LogResponse(nameof(LongRecognizeAsync), resultResponse);
+                LogResponse(nameof(GetLongRecognizeResultAsync), resultResponse);
             return operation;
         }
         catch (Exception ex)
         {
             Log.Error(ex, nameof(GetLongRecognizeResultAsync));
-            return new Operation<LongRunningRecognizeResponse> { ErrorCode = "-1", ErrorMessage = "Ошибка при выполнении запроса длительного распознавания" };
+            return new Operation<LongRunningRecognizeResponse>
+            {
+                ErrorCode = RecognizeErrors.LongRecognizeError.ErrorCode,
+                ErrorMessage = RecognizeErrors.LongRecognizeError.ErrorMessage
+            };
         }
     }
 
-    private void LogResponse(string methodName, string? resultResponse)
+    private static void LogResponse(string methodName, string? resultResponse)
     {
         Log.Information("Error in {name}: {@resultResponse}", methodName, resultResponse);
     }

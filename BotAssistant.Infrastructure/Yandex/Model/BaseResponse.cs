@@ -1,5 +1,8 @@
 ﻿namespace BotAssistant.Infrastructure.Yandex.Model;
 
+/// <summary>
+/// Базовый ответ
+/// </summary>
 public class BaseResponse
 {
     [JsonPropertyName("error_code")]

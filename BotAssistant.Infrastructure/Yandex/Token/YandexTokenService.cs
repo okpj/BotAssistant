@@ -11,8 +11,6 @@ public sealed class YandexTokenService : IYandexTokenService
     private static IAMToken? _token = null;
     private static readonly SemaphoreSlim _semaphoreSlim = new(1, 1);
 
-    
-
     public YandexTokenService(IOptions<YandexAuthorizedKeyOptions> yandexAuthorizedKeyOptions, HttpClient httpClient)
     {
         _yandexAuthorizedKeyOptions = yandexAuthorizedKeyOptions;

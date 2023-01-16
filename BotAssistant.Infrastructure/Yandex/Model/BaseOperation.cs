@@ -1,5 +1,8 @@
 ﻿namespace BotAssistant.Infrastructure.Yandex.Model;
 
+/// <summary>
+/// Базовая операция
+/// </summary>
 public class BaseOperation : BaseResponse
 {
     [JsonPropertyName("done")]

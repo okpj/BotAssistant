@@ -1,5 +1,8 @@
 ﻿namespace BotAssistant.Infrastructure.Options;
 
+/// <summary>
+/// Конфигурации Yandex
+/// </summary>
 public class YandexOptions
 {
     public const string ConfigurationSection = "Yandex";

@@ -1,5 +1,8 @@
 ﻿namespace BotAssistant.Infrastructure.Yandex.Token.Model;
 
+/// <summary>
+/// IAM Токен
+/// </summary>
 public struct IAMToken
 {
     [JsonPropertyName("iamToken")]

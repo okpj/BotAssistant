@@ -1,5 +1,8 @@
 ﻿namespace BotAssistant.Infrastructure.Options;
 
+/// <summary>
+/// Конфигурации ключей для Yandex
+/// </summary>
 public class YandexAuthorizedKeyOptions
 {
     public const string ConfigurationSection = "YandexAuthorizedKeys";
