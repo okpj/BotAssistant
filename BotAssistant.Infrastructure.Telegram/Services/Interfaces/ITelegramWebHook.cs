@@ -1,4 +1,7 @@
 ﻿namespace BotAssistant.Infrastructure.TelegramBot.Services.Interfaces;
+/// <summary>
+/// Вебхуки телеграм
+/// </summary>
 public interface ITelegramWebHook
 {
     /// <summary>

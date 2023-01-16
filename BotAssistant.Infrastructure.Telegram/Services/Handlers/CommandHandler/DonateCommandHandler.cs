@@ -1,4 +1,5 @@
-﻿using Telegram.Bot.Types.Payments;
+﻿using BotAssistant.Infrastructure.TelegramBot.Model.Constants;
+using Telegram.Bot.Types.Payments;
 
 namespace BotAssistant.Infrastructure.TelegramBot.Services.Handlers.CommandHandler;
 
@@ -15,16 +16,14 @@ public sealed class DonateCommandHandler : IDonateCommandHandler
 
     public async Task HandleAsync(Message message)
     {
-        await _telegramBotClient.SendInvoiceAsync(message.Chat.Id, "Пожертвование", "На развитие проекта",
+        await _telegramBotClient.SendInvoiceAsync(message.Chat.Id, DonateConstants.Title, DonateConstants.Descriptions,
             Guid.NewGuid().ToString(), _paymentOptions.Value.ProviderToken,
-            "RUB", new LabeledPrice[]
+            DonateConstants.Currency, new LabeledPrice[]
             {
-                new LabeledPrice("Пожертвование", 100 * 100),
+                new LabeledPrice(DonateConstants.Title, 100 * 100),
             });
     }
 
-    public async Task AnswerPreCheckoutQuery(PreCheckoutQuery preCheckoutQuery)
-    {
-       await _telegramBotClient.AnswerPreCheckoutQueryAsync(preCheckoutQuery.Id);
-    }
+    public async Task AnswerPreCheckoutQuery(PreCheckoutQuery preCheckoutQuery) =>
+        await _telegramBotClient.AnswerPreCheckoutQueryAsync(preCheckoutQuery.Id);
 }
