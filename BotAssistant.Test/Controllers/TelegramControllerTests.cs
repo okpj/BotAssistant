@@ -3,7 +3,7 @@ namespace BotAssistant.Test.Controllers;
 public class TelegramControllerTests
 {
     Mock<IOptions<ApiOptions>> _mockApiOptions;
-    Mock<IHandleUpdateService> _mockHandleUpdateService;
+    Mock<IUpdateService> _mockHandleUpdateService;
     Telegram.Bot.Types.Update _defaultUpdate;
 
     public TelegramControllerTests()
@@ -12,7 +12,7 @@ public class TelegramControllerTests
         _mockApiOptions.Setup(opt => opt.Value).Returns(new ApiOptions { AuthToken = "secret-token", BaseUrl = "api-url" });
 
         _defaultUpdate = new Telegram.Bot.Types.Update();
-        _mockHandleUpdateService = new Mock<IHandleUpdateService>();
+        _mockHandleUpdateService = new Mock<IUpdateService>();
         _mockHandleUpdateService.Setup(opt => opt.Handle(_defaultUpdate)).Returns(new Task(() => { }));
     }
 

@@ -1,9 +1,6 @@
-﻿namespace BotAssistant.Infrastructure.TelegramBot.Services.Interfaces;
+﻿namespace BotAssistant.Service.Telegram.Contracts;
 
-/// <summary>
-/// Сервис обработки запросов
-/// </summary>
-public interface IHandleUpdateService 
+public interface IUpdateService
 {
     /// <summary>
     /// Обработка запроса Update

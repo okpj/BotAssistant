@@ -20,3 +20,5 @@ global using BotAssistant.Infrastructure.Yandex.Token;
 global using BotAssistant.Infrastructure.Worker.Model;
 global using BotAssistant.Infrastructure.Worker;
 global using System.Reactive.Subjects;
+global using BotAssistant.Service.Telegram;
+global using BotAssistant.Service.Telegram.Contracts;

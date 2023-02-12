@@ -1,11 +1,12 @@
-﻿namespace BotAssistant.Infrastructure.TelegramBot.Services;
+﻿namespace BotAssistant.Service.Telegram;
 
-public class UpdateService : IHandleUpdateService
+public class UpdateService : IUpdateService
 {
     private readonly IHelpCommandHandler _helpCommandHandler;
     private readonly IDonateCommandHandler _donateCommandHandler;
-    IVoiceMessageHandler _voiceMessageHandler;
-    public UpdateService(IHelpCommandHandler helpCommandHandler, IVoiceMessageHandler voiceMessageHandler, IDonateCommandHandler donateCommandHandler)
+    private readonly IVoiceMessageHandler _voiceMessageHandler;
+    public UpdateService(IHelpCommandHandler helpCommandHandler, IVoiceMessageHandler voiceMessageHandler,
+        IDonateCommandHandler donateCommandHandler)
     {
         _helpCommandHandler = helpCommandHandler;
         _voiceMessageHandler = voiceMessageHandler;

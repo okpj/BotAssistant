@@ -23,15 +23,13 @@ public class TelegramWebHook : ITelegramWebHook
             {
                 await using var fs = File.OpenRead(_telegramBotWebHookOptions.Value.PathToCert);
                 InputFileStream cert = new(fs);
-                await _telegramBotClient.SetWebhookAsync(
-                    $"{_apiOptions.Value.BaseUrl}/api/telegram/update?authToken={_apiOptions.Value.AuthToken}", cert
-                );
+                await _telegramBotClient.SetWebhookAsync
+                    ($"{_apiOptions.Value.BaseUrl}/api/telegram/update?authToken={_apiOptions.Value.AuthToken}", cert);
             }
             else
             {
-                await _telegramBotClient.SetWebhookAsync(
-                    $"{_apiOptions.Value.BaseUrl}/api/Telegram/Update?authToken={_apiOptions.Value.AuthToken}"
-                );
+                await _telegramBotClient.SetWebhookAsync
+                    ($"{_apiOptions.Value.BaseUrl}/api/Telegram/Update?authToken={_apiOptions.Value.AuthToken}");
             }
         }
         finally

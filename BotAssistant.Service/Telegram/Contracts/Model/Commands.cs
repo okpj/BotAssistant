@@ -1,4 +1,4 @@
-﻿namespace BotAssistant.Infrastructure.TelegramBot.Model;
+﻿namespace BotAssistant.Service.Telegram.Contracts.Model;
 
 sealed class Commands
 {

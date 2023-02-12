@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(config[$"{TelegramBotWebHookOptions.ConfigurationSection}:Token"]));
         services.AddSingleton<ITelegramWebHook, TelegramWebHook>();
-        services.AddSingleton<IHandleUpdateService, UpdateService>();
+        services.AddSingleton<IUpdateService, UpdateService>();
 
         AddYandexServices(services);
         AddBotHandleServices(services);

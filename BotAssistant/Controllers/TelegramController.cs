@@ -5,13 +5,13 @@
 public class TelegramController : ControllerBase
 {
     private readonly IOptions<ApiOptions> _apiOptions;
-    private readonly IHandleUpdateService _handleUpdateService;
+    private readonly IUpdateService _updateService;
     public TelegramController(
         IOptions<ApiOptions> apiOptions,
-        IHandleUpdateService handleUpdateService)
+        IUpdateService updateService)
     {
         _apiOptions = apiOptions;
-        _handleUpdateService = handleUpdateService;
+        _updateService = updateService;
     }
 
     [HttpPost("Update")]
@@ -20,7 +20,7 @@ public class TelegramController : ControllerBase
         if (AuthToken != _apiOptions.Value.AuthToken)
             return Unauthorized();
 
-        await _handleUpdateService.Handle(update);
+        await _updateService.Handle(update);
 
         return Ok();
     }
