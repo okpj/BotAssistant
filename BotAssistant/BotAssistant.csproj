@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BotAssistant.Application.Service\BotAssistant.Application.Service.csproj" />
     <ProjectReference Include="..\BotAssistant.Infrastructure.Telegram\BotAssistant.Infrastructure.TelegramBot.csproj" />
     <ProjectReference Include="..\BotAssistant.Infrastructure.Worker\BotAssistant.Infrastructure.Worker.csproj" />
-    <ProjectReference Include="..\BotAssistant.Service\BotAssistant.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

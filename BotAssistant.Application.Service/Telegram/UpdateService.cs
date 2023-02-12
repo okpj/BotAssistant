@@ -1,4 +1,4 @@
-﻿namespace BotAssistant.Service.Telegram;
+﻿namespace BotAssistant.Application.Service.Telegram;
 
 public sealed class UpdateService : IUpdateService
 {
