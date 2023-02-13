@@ -35,6 +35,32 @@ public sealed class YandexTokenService : IYandexTokenService
         return _token;
     }
 
+
+    private async Task<IAMToken?> CreateIamTokenAsync()
+    {
+        try
+        {
+            var jwtToken = CreateJWTToken();
+            TokenCreateRequest tokenCreateRequest = new() { JWT = jwtToken };
+            var jsonReqeust = System.Text.Json.JsonSerializer.Serialize(tokenCreateRequest);
+
+            using var content = new StringContent(jsonReqeust);
+            var reqUri = new Uri(_yandexAuthorizedKeyOptions.Value.TokenUrl);
+            var response = await _httpClient.PostAsync(reqUri, content);
+            if (response.IsSuccessStatusCode)
+            {
+                var resultResponse = await response.Content.ReadAsStringAsync();
+                return JsonHelper.FromStingJson<IAMToken>(resultResponse);
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, nameof(CreateIamTokenAsync));
+        }
+        return null;
+        
+    }
+
     private string CreateJWTToken()
     {
         var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -53,21 +79,8 @@ public sealed class YandexTokenService : IYandexTokenService
 
         using var rsa = RSA.Create();
         rsa.ImportFromPem(_yandexAuthorizedKeyOptions.Value.PrivateKey?.ToCharArray());
-        string encodedToken = Jose.JWT.Encode(payload, rsa, JwsAlgorithm.PS256, headers);
+        string encodedToken = JWT.Encode(payload, rsa, JwsAlgorithm.PS256, headers);
         return encodedToken;
 
-    }
-
-    private async Task<IAMToken?> CreateIamTokenAsync()
-    {
-        var jwtToken = CreateJWTToken();
-        TokenCreateRequest tokenCreateRequest = new() { JWT = jwtToken };
-        var jsonReqeust = System.Text.Json.JsonSerializer.Serialize(tokenCreateRequest);
-
-        using var content = new StringContent(jsonReqeust);
-        var reqUri = new Uri(_yandexAuthorizedKeyOptions.Value.TokenUrl);
-        var response = await _httpClient.PostAsync(reqUri, content);
-        var resultResponse = await response.Content.ReadAsStringAsync();
-        return IAMToken.FromStingJson(resultResponse);
     }
 }

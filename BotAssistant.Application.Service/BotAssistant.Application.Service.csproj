@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\BotAssistant.Application.Contract\BotAssistant.Application.Contract.csproj" />
 	  <ProjectReference Include="..\BotAssistant.Infrastructure.Telegram\BotAssistant.Infrastructure.TelegramBot.csproj" />
 	</ItemGroup>
 

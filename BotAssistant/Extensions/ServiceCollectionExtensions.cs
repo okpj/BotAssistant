@@ -1,4 +1,11 @@
-﻿namespace BotAssistant.Extensions;
+﻿using BotAssistant.Application.Contract;
+using BotAssistant.Application.Service;
+using Polly;
+using Polly.Extensions.Http;
+using System.Net;
+using System.Reflection;
+
+namespace BotAssistant.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -16,29 +23,32 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(config[$"{TelegramBotWebHookOptions.ConfigurationSection}:Token"]));
         services.AddSingleton<ITelegramWebHook, TelegramWebHook>();
-        services.AddSingleton<IUpdateService, UpdateService>();
+        services.AddSingleton<ITelegramUpdateService, TelegramUpdateService>();
 
-        AddYandexServices(services);
-        AddBotHandleServices(services);
+        AddServices(services);
         AddBackgroundServices(services);
     }
 
 
     #region private
 
-    private static void AddBotHandleServices(IServiceCollection services)
+
+
+    private static void AddServices(IServiceCollection services)
     {
         services.AddSingleton<IVoiceMessageHandler, VoiceMessageHandler>();
         services.AddSingleton<IHelpCommandHandler, HelpCommandHandler>();
         services.AddSingleton<IDonateCommandHandler, DonateCommandHandler>();
-    }
 
-    private static void AddYandexServices(IServiceCollection services)
-    {
+        services.AddSingleton<IVoiceRecognizeService, VoiceRecognizeService>();
+
+
         services.AddSingleton<IYandexSpeechService, YandexSpeechService>();
         services.AddSingleton<IYandexTokenService, YandexTokenService>();
         services.AddSingleton<IYandexObjectService, YandexObjectService>();
+
     }
+
 
     private static void AddBackgroundServices(IServiceCollection services)
     {
@@ -48,12 +58,23 @@ public static class ServiceCollectionExtensions
         services.AddHostedService<ObserverBackgroundWorker>();
     }
 
+
     public static void ConfigureHttpClients(this IServiceCollection services, IConfiguration configuration)
     {
 
         var yandexApiKey = configuration[$"{YandexOptions.ConfigurationSection}:ApiKey"];
 
+        //var longRecognizeRetryPolicy = Policy<HttpResponseMessage>
+        //    .HandleResult(HandleResultForLongSpeechService)
+        //    .FallbackAsync(FallbackAction, OnFallbackAsync);
+
+        var fallbackAsync = Policy<HttpResponseMessage>
+            .HandleResult(r => r.IsSuccessStatusCode is false)
+            .FallbackAsync(FallbackAction, OnFallbackAsync);
+
+
         services.AddHttpClient<IYandexSpeechService, YandexSpeechService>()
+            .AddPolicyHandler(fallbackAsync)
             .ConfigureHttpClient(client =>
             {
                 client.DefaultRequestHeaders.Clear();
@@ -66,6 +87,7 @@ public static class ServiceCollectionExtensions
             });
 
         services.AddHttpClient<IYandexTokenService, YandexTokenService>()
+            .AddPolicyHandler(fallbackAsync)
             .ConfigureHttpClient(client =>
             {
                 client.DefaultRequestHeaders.Clear();
@@ -74,6 +96,26 @@ public static class ServiceCollectionExtensions
             });
     }
 
+    //private static bool HandleResultForLongSpeechService(HttpResponseMessage responseMessage)
+    //{
+    //    if (responseMessage.IsSuccessStatusCode)
+    //    {
+    //    }
+    //}
+
+    private static async Task OnFallbackAsync(DelegateResult<HttpResponseMessage> response, Context context)
+    {
+        var httpResult = response.Result;
+        var content = await httpResult.Content.ReadAsStringAsync();
+        Log.Error("ERROR Request - {@RequestUri}; StatusCode: {@StatusCode}; Response: {@Content}", httpResult.RequestMessage?.RequestUri,
+            httpResult.StatusCode, content);
+    }
+    private static Task<HttpResponseMessage> FallbackAction(DelegateResult<HttpResponseMessage> responseToFailedRequest, Context context, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(responseToFailedRequest.Result);
+    }
 
     #endregion
 }
+
+

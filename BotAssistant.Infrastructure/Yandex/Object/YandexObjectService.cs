@@ -33,7 +33,8 @@ public sealed class YandexObjectService : IYandexObjectService
                 return true;
             else
             {
-                Log.Information("{@ResponseMetadata}, {HttpStatusCode}", result.ResponseMetadata, result.HttpStatusCode);
+                Log.Information("{@ResponseMetadata}, {HttpStatusCode}", result.ResponseMetadata,
+                    result.HttpStatusCode);
                 return false;
             }
         }

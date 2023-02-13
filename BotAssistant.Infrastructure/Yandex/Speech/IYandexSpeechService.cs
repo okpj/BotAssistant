@@ -10,7 +10,7 @@ public interface IYandexSpeechService
     /// </summary>
     /// <param name="voice">Аудио файл</param>
     /// <returns></returns>
-    Task<RecognizeResult?> RecognizeAsync(byte[] voice);
+    Task<RecognizeResponse?> RecognizeAsync(byte[] voice);
 
     /// <summary>
     /// Запуск операции распознавания длительных сообщений
@@ -24,5 +24,5 @@ public interface IYandexSpeechService
     /// </summary>
     /// <param name="operationId">Идентификатор операции полученный при запуске операции длительного распознавания</param>
     /// <returns></returns>
-    Task<Operation<LongRunningRecognizeResponse>?> GetLongRecognizeResultAsync(string operationId);
+    Task<RecognizeResponse?> GetLongRecognizeResultAsync(string operationId);
 }

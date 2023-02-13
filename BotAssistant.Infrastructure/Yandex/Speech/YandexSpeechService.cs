@@ -1,4 +1,4 @@
-﻿using BotAssistant.Infrastructure.Yandex.Model.Constants;
+﻿using BotAssistant.Infrastructure.Yandex.Model.Extensions;
 
 namespace BotAssistant.Infrastructure.Yandex.Speech;
 
@@ -14,7 +14,7 @@ public class YandexSpeechService : IYandexSpeechService
         _httpClient = httpClient;
     }
 
-    public async Task<RecognizeResult?> RecognizeAsync(byte[] voice)
+    public async Task<RecognizeResponse?> RecognizeAsync(byte[] voice)
     {
         try
         {
@@ -22,23 +22,20 @@ public class YandexSpeechService : IYandexSpeechService
             {
                 var reqUri = new Uri(_yandexOptions.Value.RecognizeURL);
                 var response = await _httpClient.PostAsync(reqUri, content);
-                var resultResponse = await response.Content.ReadAsStringAsync();
 
-                if (response.IsSuccessStatusCode is false)
-                    LogResponse(nameof(StartLongRecognizeTaskAsync), resultResponse);
-
-                return JsonHelper.FromStingJson<RecognizeResult>(resultResponse);
+                if (response.IsSuccessStatusCode)
+                {
+                    var resultResponse = await response.Content.ReadAsStringAsync();
+                    return JsonHelper.FromStingJson<RecognizeResponse>(resultResponse);
+                }
             }
         }
         catch (Exception ex)
         {
             Log.Error(ex, nameof(RecognizeAsync));
-            return new RecognizeResult
-            {
-                ErrorCode = RecognizeErrors.RecognizeError.ErrorCode,
-                ErrorMessage = RecognizeErrors.RecognizeError.ErrorMessage
-            };
         }
+
+        return null;
     }
 
     public async Task<BaseOperation?> StartLongRecognizeTaskAsync(string filePath)
@@ -59,27 +56,23 @@ public class YandexSpeechService : IYandexSpeechService
             var jsonContent = System.Text.Json.JsonSerializer.Serialize(request);
             var reqUri = new Uri(_yandexOptions.Value.LongRecognizeURL);
             var response = await _httpClient.PostAsync(reqUri, new StringContent(jsonContent));
-            var resultResponse = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode is false)
-                LogResponse(nameof(StartLongRecognizeTaskAsync), resultResponse);
 
-            var resultLongRecognize = JsonHelper.FromStingJson<BaseOperation>(resultResponse);
-            return resultLongRecognize;
+            if (response.IsSuccessStatusCode)
+            {
+                var resultResponse = await response.Content.ReadAsStringAsync();
+                return JsonHelper.FromStingJson<BaseOperation>(resultResponse);
+            }
 
         }
         catch (Exception ex)
         {
             Log.Error(ex, nameof(StartLongRecognizeTaskAsync));
-            return new BaseOperation
-            {
-                ErrorCode = RecognizeErrors.LongRecognizeError.ErrorCode,
-                ErrorMessage = RecognizeErrors.LongRecognizeError.ErrorMessage
-            };
         }
+        return null;
     }
 
-    public async Task<Operation<LongRunningRecognizeResponse>?> GetLongRecognizeResultAsync(string operationId)
+    public async Task<RecognizeResponse?> GetLongRecognizeResultAsync(string operationId)
     {
         var reqUri = new Uri($"{_yandexOptions.Value.OperationURL}/{operationId}");
         Operation<LongRunningRecognizeResponse>? operation = null;
@@ -96,27 +89,23 @@ public class YandexSpeechService : IYandexSpeechService
                 response = await _httpClient.GetAsync(reqUri);
                 resultResponse = await response.Content.ReadAsStringAsync();
                 operation = JsonHelper.FromStingJson<Operation<LongRunningRecognizeResponse>>(resultResponse);
-                if (operation?.Done ?? false || response.IsSuccessStatusCode is false)
+                var operationIsDone = operation?.Done ?? false;
+                if (operationIsDone || response.IsSuccessStatusCode is false)
                     break;
             }
-
-            if (response?.IsSuccessStatusCode is false)
-                LogResponse(nameof(GetLongRecognizeResultAsync), resultResponse);
-            return operation;
+            var operationResponse = operation?.Response;
+            if (operationResponse?.Chunks is not null)
+            {
+                return new RecognizeResponse
+                {
+                    Result = operationResponse.GetFullText()
+                };
+            }
         }
         catch (Exception ex)
         {
             Log.Error(ex, nameof(GetLongRecognizeResultAsync));
-            return new Operation<LongRunningRecognizeResponse>
-            {
-                ErrorCode = RecognizeErrors.LongRecognizeError.ErrorCode,
-                ErrorMessage = RecognizeErrors.LongRecognizeError.ErrorMessage
-            };
         }
-    }
-
-    private static void LogResponse(string methodName, string? resultResponse)
-    {
-        Log.Information("Error in {name}: {@resultResponse}", methodName, resultResponse);
+        return null;
     }
 }
