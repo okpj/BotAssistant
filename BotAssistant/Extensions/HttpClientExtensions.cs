@@ -10,7 +10,7 @@ public static class HttpClientExtensions
          .HandleResult(r => r.IsSuccessStatusCode is false)
          .FallbackAsync(FallbackAction, OnFallbackAsync);
 
-        return builder.AddPolicyHandlerFallback();
+        return builder.AddPolicyHandler(fallbackAsync);
     }
 
     private static async Task OnFallbackAsync(DelegateResult<HttpResponseMessage> response, Context context)
@@ -24,16 +24,4 @@ public static class HttpClientExtensions
     {
         return Task.FromResult(responseToFailedRequest.Result);
     }
-
-    //var longRecognizeRetryPolicy = Policy<HttpResponseMessage>
-    //    .HandleResult(HandleResultForLongSpeechService)
-    //    .FallbackAsync(FallbackAction, OnFallbackAsync);
-
-    //private static bool HandleResultForLongSpeechService(HttpResponseMessage responseMessage)
-    //{
-    //    if (responseMessage.IsSuccessStatusCode)
-    //    {
-    //    }
-    //}
-
 }

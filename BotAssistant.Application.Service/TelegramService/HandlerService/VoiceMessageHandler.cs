@@ -50,8 +50,6 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
 
     private async Task HandleLongVoiceMessageAsync(Message message)
     {
-        _recognizeStream.OnNext(new WorkerTask { Work = () => HandleLongVoiceMessageAsync(message) });
-
         using MemoryStream fileStream = new();
         var voiceFile = await _telegramBotClient.GetInfoAndDownloadFileAsync(message.Voice!.FileId, fileStream);
 
