@@ -1,11 +1,4 @@
-﻿using BotAssistant.Application.Contract;
-using BotAssistant.Application.Service;
-using Polly;
-using Polly.Extensions.Http;
-using System.Net;
-using System.Reflection;
-
-namespace BotAssistant.Extensions;
+﻿namespace BotAssistant.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -64,17 +57,8 @@ public static class ServiceCollectionExtensions
 
         var yandexApiKey = configuration[$"{YandexOptions.ConfigurationSection}:ApiKey"];
 
-        //var longRecognizeRetryPolicy = Policy<HttpResponseMessage>
-        //    .HandleResult(HandleResultForLongSpeechService)
-        //    .FallbackAsync(FallbackAction, OnFallbackAsync);
-
-        var fallbackAsync = Policy<HttpResponseMessage>
-            .HandleResult(r => r.IsSuccessStatusCode is false)
-            .FallbackAsync(FallbackAction, OnFallbackAsync);
-
-
         services.AddHttpClient<IYandexSpeechService, YandexSpeechService>()
-            .AddPolicyHandler(fallbackAsync)
+            .AddPolicyHandlerFallback()
             .ConfigureHttpClient(client =>
             {
                 client.DefaultRequestHeaders.Clear();
@@ -87,32 +71,13 @@ public static class ServiceCollectionExtensions
             });
 
         services.AddHttpClient<IYandexTokenService, YandexTokenService>()
-            .AddPolicyHandler(fallbackAsync)
+            .AddPolicyHandlerFallback()
             .ConfigureHttpClient(client =>
             {
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             });
-    }
-
-    //private static bool HandleResultForLongSpeechService(HttpResponseMessage responseMessage)
-    //{
-    //    if (responseMessage.IsSuccessStatusCode)
-    //    {
-    //    }
-    //}
-
-    private static async Task OnFallbackAsync(DelegateResult<HttpResponseMessage> response, Context context)
-    {
-        var httpResult = response.Result;
-        var content = await httpResult.Content.ReadAsStringAsync();
-        Log.Error("ERROR Request - {@RequestUri}; StatusCode: {@StatusCode}; Response: {@Content}", httpResult.RequestMessage?.RequestUri,
-            httpResult.StatusCode, content);
-    }
-    private static Task<HttpResponseMessage> FallbackAction(DelegateResult<HttpResponseMessage> responseToFailedRequest, Context context, CancellationToken cancellationToken)
-    {
-        return Task.FromResult(responseToFailedRequest.Result);
     }
 
     #endregion

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant", "BotAssistant.csproj", "{169F0E05-3E1D-4991-813B-8D13BEA07F14}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BotAssistant.Domain", "BotAssistant.Domain", "{9A282AB1-BA31-43DA-85B6-586D4EFDEEB7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{9A282AB1-BA31-43DA-85B6-586D4EFDEEB7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BotAssistant.Infrastructure", "BotAssistant.Infrastructure", "{5BA01B04-B457-4481-9F02-A59E81BFA0E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{5BA01B04-B457-4481-9F02-A59E81BFA0E8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Domain", "..\BotAssistant.Domain\BotAssistant.Domain.csproj", "{506A55B1-CEE9-431F-9937-99EBD09ADD81}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Infrastructure.TelegramBot", "..\BotAssistant.Infrastructure.Telegram\BotAssistant.Infrastructure.TelegramBot.csproj", "{C7BB6AA9-E217-4EB2-99B5-AD2031786163}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BotAssistant.Test", "BotAssistant.Test", "{E67FE5B7-8075-4714-8365-895DA936E7A9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E67FE5B7-8075-4714-8365-895DA936E7A9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Test", "..\BotAssistant.Test\BotAssistant.Test.csproj", "{3FE8BB62-BC24-434D-A5E7-21966B63955C}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Application.Service", "..\BotAssistant.Application.Service\BotAssistant.Application.Service.csproj", "{B8048225-8E66-47C5-9FFC-BC6BCBD914D2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Application.Contract", "..\BotAssistant.Application.Contract\BotAssistant.Application.Contract.csproj", "{4D11C987-BB82-4AC2-B294-D06EC1D174A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotAssistant.Application.Util", "..\BotAssistant.Application.Util\BotAssistant.Application.Util.csproj", "{7C06394E-2376-4E6F-897D-1D6831E75BB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{4D11C987-BB82-4AC2-B294-D06EC1D174A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D11C987-BB82-4AC2-B294-D06EC1D174A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D11C987-BB82-4AC2-B294-D06EC1D174A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C06394E-2376-4E6F-897D-1D6831E75BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C06394E-2376-4E6F-897D-1D6831E75BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C06394E-2376-4E6F-897D-1D6831E75BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C06394E-2376-4E6F-897D-1D6831E75BB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{E8E74A01-4302-4CCF-9F24-B887B606F010} = {5BA01B04-B457-4481-9F02-A59E81BFA0E8}
 		{B8048225-8E66-47C5-9FFC-BC6BCBD914D2} = {F174C11B-AA1E-4C2E-A7EE-88AE07BB9AB9}
 		{4D11C987-BB82-4AC2-B294-D06EC1D174A8} = {F174C11B-AA1E-4C2E-A7EE-88AE07BB9AB9}
+		{7C06394E-2376-4E6F-897D-1D6831E75BB3} = {F174C11B-AA1E-4C2E-A7EE-88AE07BB9AB9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03DE1BCD-3EF5-4A2F-BC99-049D459929CD}
