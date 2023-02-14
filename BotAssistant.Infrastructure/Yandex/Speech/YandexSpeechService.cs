@@ -44,19 +44,12 @@ public class YandexSpeechService : IYandexSpeechService
         {
             LongRunningRecognizeRequest request = new()
             {
-                Config = new()
-                {
-                    Specification = new() { LiteratureText = true, RawResults = true }
-                },
-                Audio = new()
-                {
-                    Uri = $"{_yandexOptions.Value.StorageUrl}/{_yandexOptions.Value.BucketName}/{filePath}"
-                }
+                Config = new() { Specification = new Specification(true, true) },
+                Audio = new Audio($"{_yandexOptions.Value.StorageUrl}/{_yandexOptions.Value.BucketName}/{filePath}")
             };
             var jsonContent = System.Text.Json.JsonSerializer.Serialize(request);
             var reqUri = new Uri(_yandexOptions.Value.LongRecognizeURL);
             var response = await _httpClient.PostAsync(reqUri, new StringContent(jsonContent));
-
 
             if (response.IsSuccessStatusCode)
             {

@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Application.Service", "..\BotAssistant.Application.Service\BotAssistant.Application.Service.csproj", "{B8048225-8E66-47C5-9FFC-BC6BCBD914D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotAssistant.Application.Contract", "..\BotAssistant.Application.Contract\BotAssistant.Application.Contract.csproj", "{4D11C987-BB82-4AC2-B294-D06EC1D174A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Application.Contract", "..\BotAssistant.Application.Contract\BotAssistant.Application.Contract.csproj", "{4D11C987-BB82-4AC2-B294-D06EC1D174A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

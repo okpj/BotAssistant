@@ -8,7 +8,7 @@ public class MessageConstants
     /// <summary>
     /// Ошибка для слишком длинных сообщений
     /// </summary>
-    public const string LongVoiceError = "Слишком долго говоришь 🥱";
+    public const string LongVoiceError = "Слишком длинное сообщение 🥱";
 
     /// <summary>
     /// Ошибка распознавания

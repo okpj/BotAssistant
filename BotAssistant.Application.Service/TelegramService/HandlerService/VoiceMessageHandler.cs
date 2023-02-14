@@ -23,9 +23,10 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
             if (message.Voice.Duration <= DurationConstants.SmallDurationBorder)
                 await HandleShortVoiceMessageAsync(message);
             else if (message.Voice.Duration <= DurationConstants.LongDurationBorder)
-                _recognizeStream.OnNext(new WorkerTask { Work = () => HandleLongVoiceMessageAsync(message) });
+                _recognizeStream.OnNext(new WorkerTask(() => HandleLongVoiceMessageAsync(message)));
             else
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, MessageConstants.LongVoiceError, replyToMessageId: message.MessageId);
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id,
+                    MessageConstants.LongVoiceError, replyToMessageId: message.MessageId);
         }
     }
 
@@ -49,6 +50,8 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
 
     private async Task HandleLongVoiceMessageAsync(Message message)
     {
+        _recognizeStream.OnNext(new WorkerTask { Work = () => HandleLongVoiceMessageAsync(message) });
+
         using MemoryStream fileStream = new();
         var voiceFile = await _telegramBotClient.GetInfoAndDownloadFileAsync(message.Voice!.FileId, fileStream);
 

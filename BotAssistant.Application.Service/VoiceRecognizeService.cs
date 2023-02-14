@@ -19,7 +19,6 @@ public sealed class VoiceRecognizeService : IVoiceRecognizeService
     }
 
 
-
     public async Task<RecognizeResult> RecognizeLongMassageAsync(Stream voiceStream, string voiceFileName)
     {
         string? text = string.Empty;
