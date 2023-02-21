@@ -5,9 +5,20 @@
 /// </summary>
 public class WorkerTask
 {
+    public WorkerTask() { }
+
+    /// <summary>
+    /// Конструктор WorkerTask
+    /// </summary>
+    /// <param name="work">Выполняемая работа (задача)</param>
+    public WorkerTask(Func<Task> work)
+    {
+        Work = work;
+    }
+
     /// <summary>
     /// Выполняемая работа (задача)
     /// </summary>
-    public Func<Task> Work{ get; set; }
+    public Func<Task> Work { get; set; }
 
 }

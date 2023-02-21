@@ -17,7 +17,7 @@ public class YandexSpeechServiceTests
     [Fact]
     public async void RecognizeReturnResultString()
     {
-        var testResultObject = new RecognizeResult { Result = "ТЕСТ" };
+        var testResultObject = new RecognizeResponse { Result = "ТЕСТ" };
         var content = JsonSerializer.Serialize(testResultObject);
 
         _mockHttpMessageHandler = new();

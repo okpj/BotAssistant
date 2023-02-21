@@ -16,29 +16,32 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(config[$"{TelegramBotWebHookOptions.ConfigurationSection}:Token"]));
         services.AddSingleton<ITelegramWebHook, TelegramWebHook>();
-        services.AddSingleton<IHandleUpdateService, UpdateService>();
+        services.AddSingleton<ITelegramUpdateService, TelegramUpdateService>();
 
-        AddYandexServices(services);
-        AddBotHandleServices(services);
+        AddServices(services);
         AddBackgroundServices(services);
     }
 
 
     #region private
 
-    private static void AddBotHandleServices(IServiceCollection services)
+
+
+    private static void AddServices(IServiceCollection services)
     {
         services.AddSingleton<IVoiceMessageHandler, VoiceMessageHandler>();
         services.AddSingleton<IHelpCommandHandler, HelpCommandHandler>();
         services.AddSingleton<IDonateCommandHandler, DonateCommandHandler>();
-    }
 
-    private static void AddYandexServices(IServiceCollection services)
-    {
+        services.AddSingleton<IVoiceRecognizeService, VoiceRecognizeService>();
+
+
         services.AddSingleton<IYandexSpeechService, YandexSpeechService>();
         services.AddSingleton<IYandexTokenService, YandexTokenService>();
         services.AddSingleton<IYandexObjectService, YandexObjectService>();
+
     }
+
 
     private static void AddBackgroundServices(IServiceCollection services)
     {
@@ -48,12 +51,14 @@ public static class ServiceCollectionExtensions
         services.AddHostedService<ObserverBackgroundWorker>();
     }
 
+
     public static void ConfigureHttpClients(this IServiceCollection services, IConfiguration configuration)
     {
 
         var yandexApiKey = configuration[$"{YandexOptions.ConfigurationSection}:ApiKey"];
 
         services.AddHttpClient<IYandexSpeechService, YandexSpeechService>()
+            .AddPolicyHandlerFallback()
             .ConfigureHttpClient(client =>
             {
                 client.DefaultRequestHeaders.Clear();
@@ -66,6 +71,7 @@ public static class ServiceCollectionExtensions
             });
 
         services.AddHttpClient<IYandexTokenService, YandexTokenService>()
+            .AddPolicyHandlerFallback()
             .ConfigureHttpClient(client =>
             {
                 client.DefaultRequestHeaders.Clear();
@@ -74,6 +80,7 @@ public static class ServiceCollectionExtensions
             });
     }
 
-
     #endregion
 }
+
+
