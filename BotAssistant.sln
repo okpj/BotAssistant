@@ -3,31 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant", "BotAssistant.csproj", "{169F0E05-3E1D-4991-813B-8D13BEA07F14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant", "./BotAssistant/BotAssistant.csproj", "{169F0E05-3E1D-4991-813B-8D13BEA07F14}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{9A282AB1-BA31-43DA-85B6-586D4EFDEEB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{5BA01B04-B457-4481-9F02-A59E81BFA0E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Domain", "..\BotAssistant.Domain\BotAssistant.Domain.csproj", "{506A55B1-CEE9-431F-9937-99EBD09ADD81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Domain", ".\BotAssistant.Domain\BotAssistant.Domain.csproj", "{506A55B1-CEE9-431F-9937-99EBD09ADD81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Infrastructure", "..\BotAssistant.Infrastructure\BotAssistant.Infrastructure.csproj", "{0FFC821F-084A-4F3C-BD6A-2D8BFFA2DB3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Infrastructure", ".\BotAssistant.Infrastructure\BotAssistant.Infrastructure.csproj", "{0FFC821F-084A-4F3C-BD6A-2D8BFFA2DB3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Infrastructure.TelegramBot", "..\BotAssistant.Infrastructure.Telegram\BotAssistant.Infrastructure.TelegramBot.csproj", "{C7BB6AA9-E217-4EB2-99B5-AD2031786163}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Infrastructure.TelegramBot", ".\BotAssistant.Infrastructure.Telegram\BotAssistant.Infrastructure.TelegramBot.csproj", "{C7BB6AA9-E217-4EB2-99B5-AD2031786163}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E67FE5B7-8075-4714-8365-895DA936E7A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Test", "..\BotAssistant.Test\BotAssistant.Test.csproj", "{3FE8BB62-BC24-434D-A5E7-21966B63955C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Test", ".\BotAssistant.Test\BotAssistant.Test.csproj", "{3FE8BB62-BC24-434D-A5E7-21966B63955C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Infrastructure.Worker", "..\BotAssistant.Infrastructure.Worker\BotAssistant.Infrastructure.Worker.csproj", "{E8E74A01-4302-4CCF-9F24-B887B606F010}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Infrastructure.Worker", ".\BotAssistant.Infrastructure.Worker\BotAssistant.Infrastructure.Worker.csproj", "{E8E74A01-4302-4CCF-9F24-B887B606F010}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{F174C11B-AA1E-4C2E-A7EE-88AE07BB9AB9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Application.Service", "..\BotAssistant.Application.Service\BotAssistant.Application.Service.csproj", "{B8048225-8E66-47C5-9FFC-BC6BCBD914D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Application.Service", ".\BotAssistant.Application.Service\BotAssistant.Application.Service.csproj", "{B8048225-8E66-47C5-9FFC-BC6BCBD914D2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Application.Contract", "..\BotAssistant.Application.Contract\BotAssistant.Application.Contract.csproj", "{4D11C987-BB82-4AC2-B294-D06EC1D174A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotAssistant.Application.Contract", ".\BotAssistant.Application.Contract\BotAssistant.Application.Contract.csproj", "{4D11C987-BB82-4AC2-B294-D06EC1D174A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotAssistant.Application.Util", "..\BotAssistant.Application.Util\BotAssistant.Application.Util.csproj", "{7C06394E-2376-4E6F-897D-1D6831E75BB3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotAssistant.Application.Util", ".\BotAssistant.Application.Util\BotAssistant.Application.Util.csproj", "{7C06394E-2376-4E6F-897D-1D6831E75BB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
