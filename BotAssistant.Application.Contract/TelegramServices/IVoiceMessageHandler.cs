@@ -1,3 +1,4 @@
 ﻿namespace BotAssistant.Application.Contract.TelegramServices;
 
-public interface IVoiceMessageHandler : IHandler { }
+public interface IVoiceMessageHandler : IHandler
+{ }

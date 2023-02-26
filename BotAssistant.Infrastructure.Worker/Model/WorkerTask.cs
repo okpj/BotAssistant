@@ -5,7 +5,8 @@
 /// </summary>
 public class WorkerTask
 {
-    public WorkerTask() { }
+    public WorkerTask()
+    { }
 
     /// <summary>
     /// Конструктор WorkerTask
@@ -20,5 +21,4 @@ public class WorkerTask
     /// Выполняемая работа (задача)
     /// </summary>
     public Func<Task> Work { get; set; }
-
 }

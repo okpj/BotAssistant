@@ -6,12 +6,12 @@
 public static class DurationConstants
 {
     /// <summary>
-    /// Короткое сообщение (секунды) 
+    /// Короткое сообщение (секунды)
     /// </summary>
     public const int SmallDurationBorder = 29;
 
     /// <summary>
-    /// Длинное сообшение (секунды) 
+    /// Длинное сообшение (секунды)
     /// </summary>
     public const int LongDurationBorder = 300;
 }

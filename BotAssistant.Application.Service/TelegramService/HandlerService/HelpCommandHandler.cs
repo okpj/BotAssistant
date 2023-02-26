@@ -13,5 +13,4 @@ public sealed class HelpCommandHandler : IHelpCommandHandler
     {
         await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, MessageConstants.HelpDescription);
     }
-
 }

@@ -10,6 +10,7 @@ public class ObserverBackgroundWorker : BackgroundService
 {
     private readonly IObservable<WorkerTask> _recognizeStream;
     private IDisposable? _subscription;
+
     public ObserverBackgroundWorker(IObservable<WorkerTask> recognizeStream)
     {
         _recognizeStream = recognizeStream;

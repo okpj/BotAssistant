@@ -3,5 +3,5 @@
 public class LongRunningRecognizeResponse
 {
     [JsonPropertyName("chunks")]
-    public Chunk[]  Chunks { get; set; }
+    public Chunk[] Chunks { get; set; }
 }

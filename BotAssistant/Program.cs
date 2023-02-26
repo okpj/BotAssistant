@@ -11,8 +11,6 @@ var webHost = builder.WebHost;
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-
-
 // Add services to the container.
 
 host.UseSerilog((context, config) => config.ReadFrom.Configuration(context.Configuration));
@@ -33,18 +31,15 @@ host.ConfigureHostConfiguration(hostConf =>
 
 webHost.UseKestrel();
 
-
 services.AddApplicationOptions(configuration);
 services.AddApplicationServices(configuration);
 services.ConfigureHttpClients(configuration);
 
-
 var app = builder.Build();
 
-var telegramBotWebHook  = app.Services.GetRequiredService<ITelegramWebHook>();
+var telegramBotWebHook = app.Services.GetRequiredService<ITelegramWebHook>();
 await telegramBotWebHook.DeleteAsync();
 await telegramBotWebHook.SetAsync();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

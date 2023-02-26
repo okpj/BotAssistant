@@ -54,7 +54,6 @@ public class YandexSpeechService : IYandexSpeechService
                 var resultResponse = await response.Content.ReadAsStringAsync();
                 return JsonHelper.FromStingJson<BaseOperation>(resultResponse);
             }
-
         }
         catch (Exception ex)
         {

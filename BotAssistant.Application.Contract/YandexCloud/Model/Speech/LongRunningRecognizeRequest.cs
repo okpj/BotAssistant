@@ -8,5 +8,3 @@ public class LongRunningRecognizeRequest
     [JsonPropertyName("audio")]
     public Audio Audio { get; set; }
 }
-
-

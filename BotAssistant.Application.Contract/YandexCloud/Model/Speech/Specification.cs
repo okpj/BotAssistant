@@ -2,7 +2,8 @@
 
 public class Specification
 {
-    public Specification() { }
+    public Specification()
+    { }
 
     public Specification(bool literatureText, bool rawResults)
     {
@@ -13,7 +14,7 @@ public class Specification
     [JsonPropertyName("languageCode")]
     public static string LanguageCode => "auto";
 
-    [JsonPropertyName("literature_text")] 
+    [JsonPropertyName("literature_text")]
     public bool LiteratureText { get; set; }
 
     [JsonPropertyName("rawResults")]

@@ -6,8 +6,6 @@ public class YandexSpeechServiceTests
     private readonly Mock<IOptions<YandexOptions>> _mockYandexOptions;
     private Mock<HttpMessageHandler>? _mockHttpMessageHandler;
 
-
-
     public YandexSpeechServiceTests()
     {
         _mockYandexOptions = new();
@@ -29,10 +27,8 @@ public class YandexSpeechServiceTests
                 Content = new StringContent(content)
             });
 
-
         var yandexSpeechService = new YandexSpeechService(_mockYandexOptions.Object, new HttpClient(_mockHttpMessageHandler.Object));
         var result = await yandexSpeechService.RecognizeAsync(Array.Empty<byte>());
         Assert.Equal(result?.Result, testResultObject.Result);
-
     }
 }

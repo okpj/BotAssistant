@@ -5,6 +5,7 @@ public sealed class TelegramUpdateService : ITelegramUpdateService
     private readonly IHelpCommandHandler _helpCommandHandler;
     private readonly IDonateCommandHandler _donateCommandHandler;
     private readonly IVoiceMessageHandler _voiceMessageHandler;
+
     public TelegramUpdateService(IHelpCommandHandler helpCommandHandler, IVoiceMessageHandler voiceMessageHandler,
         IDonateCommandHandler donateCommandHandler)
     {
@@ -12,6 +13,7 @@ public sealed class TelegramUpdateService : ITelegramUpdateService
         _voiceMessageHandler = voiceMessageHandler;
         _donateCommandHandler = donateCommandHandler;
     }
+
     public async Task HandleAsync(Update update)
     {
         if (update.PreCheckoutQuery is not null)
@@ -27,7 +29,6 @@ public sealed class TelegramUpdateService : ITelegramUpdateService
             await CommandHandle(update.Message);
     }
 
-
     private async Task CommandHandle(Message message)
     {
         switch (message.Text)
@@ -35,12 +36,13 @@ public sealed class TelegramUpdateService : ITelegramUpdateService
             case Commands.HELP:
                 await _helpCommandHandler.HandleAsync(message);
                 break;
+
             case Commands.DONATE:
                 await _donateCommandHandler.HandleAsync(message);
                 break;
+
             default:
                 break;
         }
     }
-
 }

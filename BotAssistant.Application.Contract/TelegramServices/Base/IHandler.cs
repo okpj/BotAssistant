@@ -1,4 +1,5 @@
 ﻿namespace BotAssistant.Application.Contract.TelegramServices.Base;
+
 public interface IHandler
 {
     /// <summary>

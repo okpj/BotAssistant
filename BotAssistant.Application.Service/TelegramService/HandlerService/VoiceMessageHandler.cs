@@ -13,7 +13,6 @@ public sealed class VoiceMessageHandler : IVoiceMessageHandler
         _telegramBotClient = telegramBotClient;
         _voiceRecognizeService = voiceRecognizeService;
         _recognizeStream = recognizeStream;
-
     }
 
     public async Task HandleAsync(Message message)

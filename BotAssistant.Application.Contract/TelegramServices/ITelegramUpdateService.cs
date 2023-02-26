@@ -9,4 +9,3 @@ public interface ITelegramUpdateService
     /// <returns></returns>
     Task HandleAsync(Update update);
 }
-
