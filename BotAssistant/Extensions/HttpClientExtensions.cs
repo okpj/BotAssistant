@@ -20,6 +20,7 @@ public static class HttpClientExtensions
         Log.Error("ERROR Request - {@RequestUri}; StatusCode: {@StatusCode}; Response: {@Content}", httpResult.RequestMessage?.RequestUri,
             httpResult.StatusCode, content);
     }
+
     private static Task<HttpResponseMessage> FallbackAction(DelegateResult<HttpResponseMessage> responseToFailedRequest, Context context, CancellationToken cancellationToken)
     {
         return Task.FromResult(responseToFailedRequest.Result);

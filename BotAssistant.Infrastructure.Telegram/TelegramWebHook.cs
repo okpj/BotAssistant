@@ -12,7 +12,6 @@ public class TelegramWebHook : ITelegramWebHook
         _telegramBotClient = telegramBotClient;
         _telegramBotWebHookOptions = telegramBotWebHookOptions;
         _apiOptions = apiOptions;
-
     }
 
     public async Task SetAsync()
@@ -43,5 +42,4 @@ public class TelegramWebHook : ITelegramWebHook
     {
         await _telegramBotClient.DeleteWebhookAsync();
     }
-
 }

@@ -22,10 +22,7 @@ public static class ServiceCollectionExtensions
         AddBackgroundServices(services);
     }
 
-
     #region private
-
-
 
     private static void AddServices(IServiceCollection services)
     {
@@ -35,13 +32,10 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<IVoiceRecognizeService, VoiceRecognizeService>();
 
-
         services.AddSingleton<IYandexSpeechService, YandexSpeechService>();
         services.AddSingleton<IYandexTokenService, YandexTokenService>();
         services.AddSingleton<IYandexObjectService, YandexObjectService>();
-
     }
-
 
     private static void AddBackgroundServices(IServiceCollection services)
     {
@@ -51,10 +45,8 @@ public static class ServiceCollectionExtensions
         services.AddHostedService<ObserverBackgroundWorker>();
     }
 
-
     public static void ConfigureHttpClients(this IServiceCollection services, IConfiguration configuration)
     {
-
         var yandexApiKey = configuration[$"{YandexOptions.ConfigurationSection}:ApiKey"];
 
         services.AddHttpClient<IYandexSpeechService, YandexSpeechService>()
@@ -80,7 +72,5 @@ public static class ServiceCollectionExtensions
             });
     }
 
-    #endregion
+    #endregion private
 }
-
-

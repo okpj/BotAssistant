@@ -2,9 +2,9 @@ namespace BotAssistant.Test.Controllers;
 
 public class TelegramControllerTests
 {
-    Mock<IOptions<ApiOptions>> _mockApiOptions;
-    Mock<ITelegramUpdateService> _mockHandleUpdateService;
-    Telegram.Bot.Types.Update _defaultUpdate;
+    private Mock<IOptions<ApiOptions>> _mockApiOptions;
+    private Mock<ITelegramUpdateService> _mockHandleUpdateService;
+    private Telegram.Bot.Types.Update _defaultUpdate;
 
     public TelegramControllerTests()
     {
@@ -13,14 +13,14 @@ public class TelegramControllerTests
 
         _defaultUpdate = new Telegram.Bot.Types.Update();
         _mockHandleUpdateService = new Mock<ITelegramUpdateService>();
-       _mockHandleUpdateService.Setup(opt => opt.HandleAsync(_defaultUpdate)).Returns(new Task(() => { }));
+        _mockHandleUpdateService.Setup(opt => opt.HandleAsync(_defaultUpdate)).Returns(new Task(() => { }));
     }
 
     #region Telegram
+
     [Fact]
     public async void UpdateReturnsUnauthorizedError()
     {
-
         var controller = new TelegramController(_mockApiOptions.Object, _mockHandleUpdateService.Object);
         var result = await controller.Update("token", new Telegram.Bot.Types.Update());
         Assert.IsType<UnauthorizedResult>(result);
@@ -29,10 +29,10 @@ public class TelegramControllerTests
     [Fact]
     public async void UpdateReturnsOkResult()
     {
-
         var controller = new TelegramController(_mockApiOptions.Object, _mockHandleUpdateService.Object);
         var result = await controller.Update("secret-token", _defaultUpdate);
         Assert.IsType<OkResult>(result);
     }
-    #endregion
+
+    #endregion Telegram
 }

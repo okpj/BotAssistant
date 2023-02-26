@@ -2,7 +2,9 @@
 
 public class Audio
 {
-    public Audio() { }
+    public Audio()
+    { }
+
     public Audio(string uri)
     {
         Uri = uri;

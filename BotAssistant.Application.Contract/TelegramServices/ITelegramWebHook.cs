@@ -1,4 +1,5 @@
 ﻿namespace BotAssistant.Application.Contract.TelegramServices;
+
 /// <summary>
 /// Вебхуки телеграм
 /// </summary>

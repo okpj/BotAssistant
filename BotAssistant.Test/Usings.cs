@@ -1,11 +1,11 @@
-global using Xunit;
+global using BotAssistant.Application.Contract.TelegramServices;
+global using BotAssistant.Application.Contract.YandexCloud.Model.Speech;
 global using BotAssistant.Controllers;
 global using BotAssistant.Infrastructure.Options;
-global using BotAssistant.Application.Contract.TelegramServices;
+global using BotAssistant.Infrastructure.Yandex;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Extensions.Options;
 global using Moq;
-global using BotAssistant.Application.Contract.YandexCloud.Model.Speech;
-global using System.Text.Json;
 global using Moq.Protected;
-global using BotAssistant.Infrastructure.Yandex;
+global using System.Text.Json;
+global using Xunit;

@@ -34,7 +34,6 @@ public sealed class YandexTokenService : IYandexTokenService
         return _token;
     }
 
-
     private async Task<IAMToken?> CreateIamTokenAsync()
     {
         try
@@ -57,7 +56,6 @@ public sealed class YandexTokenService : IYandexTokenService
             Log.Error(ex, nameof(CreateIamTokenAsync));
         }
         return null;
-
     }
 
     private string CreateJWTToken()
@@ -80,6 +78,5 @@ public sealed class YandexTokenService : IYandexTokenService
         rsa.ImportFromPem(_yandexAuthorizedKeyOptions.Value.PrivateKey?.ToCharArray());
         string encodedToken = JWT.Encode(payload, rsa, JwsAlgorithm.PS256, headers);
         return encodedToken;
-
     }
 }

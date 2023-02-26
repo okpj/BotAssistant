@@ -6,6 +6,7 @@ public class TelegramController : ControllerBase
 {
     private readonly IOptions<ApiOptions> _apiOptions;
     private readonly ITelegramUpdateService _updateService;
+
     public TelegramController(
         IOptions<ApiOptions> apiOptions,
         ITelegramUpdateService updateService)
@@ -24,6 +25,4 @@ public class TelegramController : ControllerBase
 
         return Ok();
     }
-
-
 }

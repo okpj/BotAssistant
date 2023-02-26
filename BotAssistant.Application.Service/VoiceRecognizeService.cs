@@ -18,7 +18,6 @@ public sealed class VoiceRecognizeService : IVoiceRecognizeService
         return new RecognizeResult { Text = yandexRecognizeResult?.Result };
     }
 
-
     public async Task<RecognizeResult> RecognizeLongMassageAsync(Stream voiceStream, string voiceFileName)
     {
         string? text = string.Empty;
@@ -34,6 +33,5 @@ public sealed class VoiceRecognizeService : IVoiceRecognizeService
         }
 
         return new RecognizeResult { Text = text };
-
     }
 }

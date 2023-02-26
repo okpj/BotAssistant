@@ -11,5 +11,4 @@ public class User : IEntity<long>
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
-
 }

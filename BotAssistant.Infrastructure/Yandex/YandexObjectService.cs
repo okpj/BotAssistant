@@ -7,7 +7,8 @@ namespace BotAssistant.Infrastructure.Yandex;
 public sealed class YandexObjectService : IYandexObjectService
 {
     private readonly IOptions<YandexOptions> _yandexOptions;
-    AmazonS3Client _s3client;
+    private AmazonS3Client _s3client;
+
     public YandexObjectService(IOptions<YandexOptions> yandexOptions)
     {
         _yandexOptions = yandexOptions;
